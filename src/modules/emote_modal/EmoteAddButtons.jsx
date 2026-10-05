@@ -2,7 +2,7 @@ import {useDismiss, useFloating, useInteractions} from '@floating-ui/react';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
 import {Button, Popover, Tooltip} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {useShallow} from 'zustand/react/shallow';
 import Icon from '@/common/components/Icon';
 import StatusButton from '@/common/components/StatusButton';
@@ -15,7 +15,7 @@ import useAuthStore from '@/stores/auth';
 import {getCurrentChannel} from '@/utils/channel';
 import {getCurrentUser} from '@/utils/user';
 import styles from './EmoteModal.module.css';
-import useEmoteModalStore, {availabilityKey, performAdd, UNKNOWN_AVAILABILITY} from './store';
+import useEmoteModalStore, {availabilityKey, fetchAvailability, performAdd, UNKNOWN_AVAILABILITY} from './store';
 import {addedToLabel, addToLabel, canAddEmote} from './utils';
 
 // why a still-loaded emote can't be added to a destination, for the reasons the api reports
@@ -75,6 +75,11 @@ export default function EmoteAddButtons({emote}) {
   const addable = canAddEmote(emote);
   const userId = currentUser?.id ?? null;
   const availabilityEligible = addable && userId != null;
+  useEffect(() => {
+    if (availabilityEligible) {
+      fetchAvailability(emote.id, userId);
+    }
+  }, [availabilityEligible, emote.id, userId]);
   const availability = useEmoteModalStore((state) =>
     availabilityEligible ? (state.availability[availabilityKey(userId, emote.id)] ?? null) : UNKNOWN_AVAILABILITY
   );
