@@ -261,10 +261,6 @@ export const EmoteMenuTips = {
 };
 
 export const SettingsPromotions = {
-  // USERNAME_EFFECT: 'settingsPromotionDismissedUsernameEffect',
-  // CHATBOT_COMMAND_AUTOCOMPLETE: 'settingsPromotionDismissedChatbotCommandAutocomplete',
-  // SELF_BOT: 'settingsPromotionDismissedSelfBot',
-  // SUBSCRIPTION_BADGE: 'settingsPromotionDismissedSubscriptionBadge',
   SELF_BOT_TIMERS: 'settingsPromotionDismissedSelfBotTimers',
   USERNAME_HOVER_EFFECT: 'settingsPromotionDismissedUsernameHoverEffect',
 };
